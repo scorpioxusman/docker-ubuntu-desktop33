@@ -7,7 +7,7 @@
 sleep 15
 
 # 3. Authenticate using the NEW key (Quotes prevent the dash error)
-/usr/bin/tailscale up --auth-key='tskey-auth-kd8uiJqS5511CNTRL-QSznzFWE6t9nVQ6GjEr9t9oGDGkgjzo4' --accept-dns=false --hostname=railway-desktop
+/usr/bin/tailscale up --auth-key='tskey-auth-k6QJqjGM7z11CNTRL-rHVyrXkHiAZU4SeDEcVoAZHRKMAj6biFS' --accept-dns=false --hostname=railway-desktop
 
 # 4. Start Redis in background
 /usr/bin/redis-server --daemonize yes
