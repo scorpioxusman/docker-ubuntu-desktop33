@@ -1,19 +1,18 @@
 #!/bin/bash
 
-# 1. Start Tailscale background engine
-# Note: --tun=userspace-networking is required for Docker containers
-sudo tailscaled --tun=userspace-networking --socks5-server=localhost:1055 &
+# 1. Start Tailscale engine in the background
+/usr/sbin/tailscaled --tun=userspace-networking --socks5-server=localhost:1055 &
 
-# 2. Re-connect Tailscale (using your Auth Key if available)
-# If you don't use a key, check your Railway logs for the login link
-sudo tailscale up --authkey=${TAILSCALE_AUTHKEY} --accept-dns=false
+# 2. Give the engine time to wake up
+sleep 15
 
-# 3. Start Redis in the background
-sudo redis-server --daemonize yes
+# 3. Authenticate with your new REUSABLE key
+/usr/bin/tailscale up --auth-key=tskey-auth-kPuq2cnSWR11CNTRL-UNK3bNLctdL8EVNDp8CxdLfeYkiqXvwP --accept-dns=false --hostname=railway-desktop
 
-# 4. Clear any old RDP "Lock" files from previous crashes
-sudo rm -rf /var/run/xrdp/*.pid
+# 4. Start Redis
+/usr/bin/redis-server --daemonize yes
 
-# 5. Start XRDP services manually
-sudo /usr/sbin/xrdp-sesman
-sudo /usr/sbin/xrdp --nodaemon
+# 5. Clean up RDP and start it
+rm -f /var/run/xrdp/*.pid
+/usr/sbin/xrdp-sesman
+/usr/sbin/xrdp --nodaemon
